@@ -13,7 +13,7 @@ import {
   SidebarFooter,
 } from '@/components/ui/sidebar';
 import Header from '@/components/header';
-import { KrishiMitraAIIcon } from '@/components/icons';
+import { KisanMitraIcon } from '@/components/icons';
 import { useDeviceView } from '@/context/device-view-provider';
 import { cn } from '@/lib/utils';
 import SoilAnalysisForm from '@/components/soil-analysis-form';
@@ -38,8 +38,8 @@ export default function SoilAnalysisPage() {
             <Sidebar>
                 <SidebarHeader>
                 <div className="flex items-center gap-2">
-                    <KrishiMitraAIIcon className="h-8 w-8 text-primary" />
-                    <h1 className="text-xl font-semibold">KrishiMitraAI</h1>
+                    <KisanMitraIcon className="h-8 w-8 text-primary" />
+                    <h1 className="text-xl font-semibold">KisanMitra</h1>
                 </div>
                 </SidebarHeader>
                 <SidebarContent>

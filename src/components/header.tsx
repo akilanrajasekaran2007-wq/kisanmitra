@@ -50,7 +50,7 @@ export default function Header() {
       <SidebarTrigger>
         <PanelLeft />
       </SidebarTrigger>
-      <h1 className="text-xl font-semibold md:hidden">KrishiMitraAI</h1>
+      <h1 className="text-xl font-semibold md:hidden">KisanMitra</h1>
       <div className="flex-1 justify-center hidden md:flex">
         <DeviceSwitcher />
       </div>

@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { DeviceViewProvider } from '@/context/device-view-provider';
 
 export const metadata: Metadata = {
-  title: 'KrishiMitraAI',
+  title: 'KisanMitra',
   description: 'An AI-powered decision-support tool for farmers, powered by Gemini.',
 };
 
