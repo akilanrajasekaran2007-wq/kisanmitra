@@ -1,0 +1,23 @@
+
+export const plantVarieties: Record<string, string[]> = {
+  'Mango': ['Alphonso', 'Banganapalli', 'Dasheri', 'Langra', 'Kesar', 'Totapuri', 'Neelam', 'Malgova'],
+  'Rice': ['Basmati', 'Sona Masuri', 'Ponni', 'Jeera Samba', 'Matta Rice', 'Ambemohar'],
+  'Tomato': ['Pusa Ruby', 'Arka Rakshak', 'Pusa Sadabahar', 'Roma', 'Cherry'],
+  'Chilli': ['Guntur Sannam', 'Byadgi', 'Kashmiri', 'Jwala', 'Kanthari'],
+  'Coconut': ['West Coast Tall', 'East Coast Tall', 'Chowghat Orange Dwarf', 'Malayan Yellow Dwarf'],
+  'Banana': ['Robusta', 'Dwarf Cavendish', 'Nendran', 'Poovan', 'Red Banana'],
+  'Brinjal (Eggplant)': ['Pusa Purple Long', 'Arka Navneet', 'Black Beauty', 'Green Long'],
+  'Coffee': ['Arabica (Kent, S.795)', 'Robusta (Peradeniya, S.274)'],
+  'Tea': ['Assam', 'Darjeeling', 'Nilgiri', 'Kangra'],
+  'Cotton': ['MCU-5', 'Suvin', 'DCH-32', 'Bunny'],
+  'Sugarcane': ['Co 86032', 'CoJ 64', 'Co 0238', 'Co 1148'],
+  'Areca nut': ['Mangala', 'Sumangala', 'Sreemangala'],
+  'Black Pepper': ['Panniyur-1', 'Karimunda', 'Kuthiravally'],
+  'Cardamom': ['Malabar', 'Mysore', 'Vazhukka'],
+  'Drumstick (Moringa)': ['PKM-1', 'PKM-2', 'ODC'],
+  'Jackfruit': ['Varikka', 'Koozha'],
+  'Papaya': ['Coorg Honey Dew', 'Pusa Delicious', 'Red Lady'],
+  'Rubber': ['RRIM 600', 'GT 1', 'RRII 105'],
+  'Turmeric': ['Alleppey', 'Erode', 'Salem'],
+  'Ginger': ['Cochin', 'Calicut', 'Nadia'],
+};
