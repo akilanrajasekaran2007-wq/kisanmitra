@@ -29,6 +29,7 @@ const FertilizerRecommendationSchema = z.object({
   fertilizer: z.string().describe('The name of the recommended fertilizer (e.g., "20-20-20 NPK")'),
   applicationRate: z.string().describe('The recommended application rate (e.g., "100 kg/hectare").'),
   reasoning: z.string().describe('A brief explanation for the recommendation.'),
+  approxPrice: z.string().describe('The approximate market price for the fertilizer (e.g., "₹500-600 per 50kg bag").'),
 });
 export type FertilizerRecommendation = z.infer<typeof FertilizerRecommendationSchema>;
 
@@ -116,7 +117,7 @@ const recommendFertilizerPrompt = ai.definePrompt({
 
   Planted Crop: {{{plantName}}}
 
-  Provide a specific fertilizer recommendation, its application rate, and the reasoning.
+  Provide a specific fertilizer recommendation, its application rate, its approximate market price, and the reasoning.
   Return the recommendation in the specified JSON format.
   `,
 });

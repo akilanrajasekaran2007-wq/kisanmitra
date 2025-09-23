@@ -170,6 +170,10 @@ export default function SoilReportAnalysis({
                   <p>{fertilizerRec.applicationRate}</p>
                 </div>
                 <div>
+                  <h3 className="font-semibold">Approximate Price</h3>
+                  <p>{fertilizerRec.approxPrice}</p>
+                </div>
+                <div>
                   <h3 className="font-semibold">Reasoning</h3>
                   <p className="text-sm text-muted-foreground">{fertilizerRec.reasoning}</p>
                 </div>
