@@ -1,5 +1,5 @@
 'use client';
-import { Home, ClipboardPen, Bug, Landmark } from 'lucide-react';
+import { Home, ClipboardPen, Bug, Landmark, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import {
   Sidebar,
@@ -10,6 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarFooter,
 } from '@/components/ui/sidebar';
 import Header from '@/components/header';
 import { KrishiMitraAIIcon } from '@/components/icons';
@@ -85,6 +86,16 @@ export default function GovtSchemesPage() {
                     </SidebarMenuItem>
                 </SidebarMenu>
                 </SidebarContent>
+                <SidebarFooter>
+                  <SidebarMenu>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton tooltip="Logout">
+                        <LogOut />
+                        <span className="group-data-[collapsible=icon]:hidden">Logout</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  </SidebarMenu>
+                </SidebarFooter>
             </Sidebar>
             <SidebarInset>
                 <Header />
