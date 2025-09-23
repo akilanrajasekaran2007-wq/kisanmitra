@@ -1,3 +1,4 @@
+
 import type { SVGProps } from "react";
 
 export function KisanMitraIcon(props: SVGProps<SVGSVGElement>) {
@@ -14,10 +15,9 @@ export function KisanMitraIcon(props: SVGProps<SVGSVGElement>) {
       strokeLinejoin="round"
       {...props}
     >
-      <path d="M7 20h10" />
-      <path d="M12 20V4" />
-      <path d="M12 4H8c-2 0-4 2-4 4v0c0 2 2 4 4 4h4" />
-      <path d="M12 4h4c2 0 4 2 4 4v0c0 2-2 4-4 4h-4" />
+      <path d="M12 2a10 10 0 0 0-10 10c0 5.52 4.48 10 10 10s10-4.48 10-10A10 10 0 0 0 12 2z" />
+      <path d="M12 16V8" />
+      <path d="m9 11 3-3 3 3" />
     </svg>
   );
 }
