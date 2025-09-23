@@ -1,5 +1,5 @@
 'use client';
-import { Home, ClipboardPen, Bug, Landmark, LogOut, History as HistoryIcon } from 'lucide-react';
+import { Home, ClipboardPen, Bug, Landmark, LogOut, History as HistoryIcon, User } from 'lucide-react';
 import Link from 'next/link';
 import {
   Sidebar,
@@ -90,6 +90,16 @@ export default function SoilAnalysisPage() {
                           <Landmark />
                           <span className="group-data-[collapsible=icon]:hidden">
                             Govt. Schemes
+                          </span>
+                        </SidebarMenuButton>
+                      </Link>
+                    </SidebarMenuItem>
+                     <SidebarMenuItem>
+                      <Link href="/profile">
+                        <SidebarMenuButton tooltip="Profile">
+                          <User />
+                          <span className="group-data-[collapsible=icon]:hidden">
+                            Profile
                           </span>
                         </SidebarMenuButton>
                       </Link>

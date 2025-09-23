@@ -16,9 +16,9 @@ import Header from '@/components/header';
 import { KisanMitraIcon } from '@/components/icons';
 import { useDeviceView } from '@/context/device-view-provider';
 import { cn } from '@/lib/utils';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import ProfileCard from '@/components/profile-card';
 
-export default function HistoryPage() {
+export default function ProfilePage() {
     const { view } = useDeviceView();
 
   return (
@@ -76,7 +76,7 @@ export default function HistoryPage() {
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                         <Link href="/history">
-                        <SidebarMenuButton tooltip="History" isActive>
+                        <SidebarMenuButton tooltip="History">
                             <HistoryIcon />
                             <span className="group-data-[collapsible=icon]:hidden">
                             History
@@ -94,9 +94,9 @@ export default function HistoryPage() {
                         </SidebarMenuButton>
                       </Link>
                     </SidebarMenuItem>
-                     <SidebarMenuItem>
+                    <SidebarMenuItem>
                       <Link href="/profile">
-                        <SidebarMenuButton tooltip="Profile">
+                        <SidebarMenuButton tooltip="Profile" isActive>
                           <User />
                           <span className="group-data-[collapsible=icon]:hidden">
                             Profile
@@ -120,14 +120,7 @@ export default function HistoryPage() {
             <SidebarInset>
                 <Header />
                 <main className="p-4 lg:p-6">
-                  <Card>
-                    <CardHeader>
-                        <CardTitle>History</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p>Your activity history will be displayed here.</p>
-                    </CardContent>
-                  </Card>
+                  <ProfileCard />
                 </main>
             </SidebarInset>
             </SidebarProvider>

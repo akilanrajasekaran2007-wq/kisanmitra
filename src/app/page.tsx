@@ -1,5 +1,5 @@
 'use client';
-import { Home, ClipboardPen, Bug, Landmark, LogOut, History as HistoryIcon } from 'lucide-react';
+import { Home, ClipboardPen, Bug, Landmark, LogOut, History as HistoryIcon, User } from 'lucide-react';
 import Link from 'next/link';
 import {
   Sidebar,
@@ -18,6 +18,7 @@ import { useDeviceView } from '@/context/device-view-provider';
 import { cn } from '@/lib/utils';
 import YourPlantForm from '@/components/your-plant-form';
 import WeatherForecast from '@/components/weather-forecast';
+import ProfileCard from '@/components/profile-card';
 
 export default function DashboardPage() {
     const { view } = useDeviceView();
@@ -95,6 +96,16 @@ export default function DashboardPage() {
                         </SidebarMenuButton>
                       </Link>
                     </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <Link href="/profile">
+                        <SidebarMenuButton tooltip="Profile">
+                          <User />
+                          <span className="group-data-[collapsible=icon]:hidden">
+                            Profile
+                          </span>
+                        </SidebarMenuButton>
+                      </Link>
+                    </SidebarMenuItem>
                 </SidebarMenu>
                 </SidebarContent>
                 <SidebarFooter>
@@ -115,6 +126,7 @@ export default function DashboardPage() {
                     <YourPlantForm />
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 md:gap-8">
+                    <ProfileCard />
                     <WeatherForecast />
                   </div>
                 </main>
