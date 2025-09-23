@@ -22,6 +22,7 @@ import SoilAnalysisResult from './soil-analysis-result';
 export default function SoilAnalysisForm() {
   const [soilPhotoFile, setSoilPhotoFile] = useState<File | null>(null);
   const [soilPhotoPreview, setSoilPhotoPreview] = useState<string | null>(null);
+  const [location, setLocation] = useState('');
   const [analysis, setAnalysis] = useState<AnalyzeSoilImageOutput | null>(null);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -57,7 +58,7 @@ export default function SoilAnalysisForm() {
       reader.onloadend = async () => {
         try {
             const base64data = reader.result as string;
-            const result = await analyzeSoilImage({ photoDataUri: base64data });
+            const result = await analyzeSoilImage({ photoDataUri: base64data, location });
             setAnalysis(result);
         } catch (error) {
             console.error('Error analyzing soil image:', error);
@@ -139,6 +140,18 @@ export default function SoilAnalysisForm() {
                 />
               </div>
             )}
+            <div className="grid gap-2">
+              <Label htmlFor="location">Location (Optional)</Label>
+              <Input
+                id="location"
+                placeholder="e.g., Coimbatore, Tamil Nadu"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                Providing a location helps the AI give more accurate recommendations.
+              </p>
+            </div>
           </div>
         </CardContent>
         <CardFooter>

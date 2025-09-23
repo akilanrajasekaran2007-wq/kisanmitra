@@ -16,6 +16,7 @@ const AnalyzeSoilImageInputSchema = z.object({
     .describe(
       "A photo of soil, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
     ),
+  location: z.string().optional().describe('The location where the soil sample was taken.'),
 });
 export type AnalyzeSoilImageInput = z.infer<
   typeof AnalyzeSoilImageInputSchema
@@ -43,11 +44,14 @@ const prompt = ai.definePrompt({
   input: {schema: AnalyzeSoilImageInputSchema},
   output: {schema: AnalyzeSoilImageOutputSchema},
   prompt: `You are an expert soil scientist. Analyze the provided image of soil.
+{{#if location}}
+The soil sample was taken from: {{{location}}}. Use this location to inform your analysis about regional soil characteristics and climate, which will affect suitable plants.
+{{/if}}
 
-Based on the visual evidence in the image, determine the following:
+Based on the visual evidence in the image and the provided location (if available), determine the following:
 1.  **Soil Type**: Identify the primary type of soil (e.g., Clay, Sandy, Loam, Silt, Peat, Chalky).
 2.  **Soil Characteristics**: Describe the visible characteristics, such as texture, color, and structure.
-3.  **Suitable Plants**: Suggest a list of plants that are well-suited to grow in this type of soil.
+3.  **Suitable Plants**: Suggest a list of plants that are well-suited to grow in this type of soil and climate.
 
 Return your analysis in the specified JSON format.
 
