@@ -37,6 +37,19 @@ export default function SoilAnalysisForm() {
               Please upload a PDF or CSV file.
             </p>
           </div>
+          <div className="grid gap-2">
+            <Label htmlFor="soil-photo">Soil Photo (approx)</Label>
+            <div className="flex items-center gap-2">
+              <Input id="soil-photo" type="file" accept="image/*" />
+              <Button size="icon" variant="outline">
+                <Upload className="h-4 w-4" />
+                <span className="sr-only">Upload</span>
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Please upload a JPG, PNG, or other image file.
+            </p>
+          </div>
         </div>
       </CardContent>
       <CardFooter>
