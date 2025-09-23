@@ -15,11 +15,10 @@ export function KisanMitraIcon(props: SVGProps<SVGSVGElement>) {
       strokeLinejoin="round"
       {...props}
     >
-      <path d="M12 22V12" />
-      <path d="M12 12H8.5a3.5 3.5 0 1 0 0 7H12" />
-      <path d="M12 12h3.5a3.5 3.5 0 1 1 0 7H12" />
-      <path d="M12 12V6.5a3.5 3.5 0 1 1 7 0V12" />
-      <path d="M12 12V6.5a3.5 3.5 0 1 0-7 0V12" />
+      <path d="M7 20h10" />
+      <path d="M12 20V4" />
+      <path d="M12 4c-2.5 0-4.5-2-4.5-4.5" />
+      <path d="M12 4c2.5 0 4.5-2 4.5-4.5" />
     </svg>
   );
 }
