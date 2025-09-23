@@ -158,58 +158,39 @@ export default function SoilAnalysisForm() {
         <CardContent>
           <div className="grid gap-4">
             <div className="grid gap-2">
-                <Label htmlFor="soil-report-button">Soil Data Report (accurate)</Label>
-                <div className="flex items-center gap-2">
-                    <Input
-                        id="soil-report"
-                        type="file"
-                        accept=".txt"
-                        onChange={handleSoilReportChange}
-                        disabled={!!soilPhotoFile}
-                        ref={soilReportInputRef}
-                        className="hidden"
-                    />
-                    <Button
-                        id="soil-report-button"
-                        variant="outline"
-                        disabled={!!soilPhotoFile}
-                        onClick={() => soilReportInputRef.current?.click()}
-                        className="w-full justify-start gap-2"
-                    >
-                        <Upload className="h-4 w-4" />
-                        <span>{soilReportFile ? soilReportFile.name : 'Upload Data Report'}</span>
-                    </Button>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                    Upload a TXT file for detailed analysis.
-                </p>
+              <Label htmlFor="soil-report">Soil Data Report (accurate)</Label>
+              <Input
+                id="soil-report"
+                type="file"
+                accept=".txt"
+                onChange={handleSoilReportChange}
+                disabled={!!soilPhotoFile}
+                ref={soilReportInputRef}
+                className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+              />
+              <p className="text-xs text-muted-foreground">
+                Upload a TXT file for detailed analysis.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+                <div className="flex-grow border-t border-muted" />
+                <span className="text-xs text-muted-foreground">OR</span>
+                <div className="flex-grow border-t border-muted" />
             </div>
             <div className="grid gap-2">
-                <Label htmlFor="soil-photo-button">Soil Photo (approx)</Label>
-                <div className="flex items-center gap-2">
-                    <Input
-                        id="soil-photo"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleSoilPhotoChange}
-                        disabled={!!soilReportFile}
-                        ref={soilPhotoInputRef}
-                        className="hidden"
-                    />
-                    <Button
-                        id="soil-photo-button"
-                        variant="outline"
-                        disabled={!!soilReportFile}
-                        onClick={() => soilPhotoInputRef.current?.click()}
-                        className="w-full justify-start gap-2"
-                    >
-                        <Upload className="h-4 w-4" />
-                        <span>{soilPhotoFile ? soilPhotoFile.name : 'Upload Photo'}</span>
-                    </Button>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                    Please upload a JPG, PNG, or other image file.
-                </p>
+              <Label htmlFor="soil-photo">Soil Photo (approx)</Label>
+              <Input
+                id="soil-photo"
+                type="file"
+                accept="image/*"
+                onChange={handleSoilPhotoChange}
+                disabled={!!soilReportFile}
+                ref={soilPhotoInputRef}
+                className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+              />
+              <p className="text-xs text-muted-foreground">
+                Please upload a JPG, PNG, or other image file.
+              </p>
             </div>
             {soilPhotoPreview && (
               <div className="grid gap-2">
@@ -252,3 +233,5 @@ export default function SoilAnalysisForm() {
     </div>
   );
 }
+
+    
