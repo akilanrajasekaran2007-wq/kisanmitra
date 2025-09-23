@@ -1,6 +1,6 @@
 'use client';
 import { Home, ClipboardPen } from 'lucide-react';
-
+import Link from 'next/link';
 import {
   Sidebar,
   SidebarContent,
@@ -44,20 +44,24 @@ export default function SoilAnalysisPage() {
                 <SidebarContent>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                    <SidebarMenuButton href="/" tooltip="Dashboard">
-                        <Home />
-                        <span className="group-data-[collapsible=icon]:hidden">
-                        Dashboard
-                        </span>
-                    </SidebarMenuButton>
+                      <Link href="/">
+                        <SidebarMenuButton tooltip="Dashboard">
+                            <Home />
+                            <span className="group-data-[collapsible=icon]:hidden">
+                            Dashboard
+                            </span>
+                        </SidebarMenuButton>
+                      </Link>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                      <SidebarMenuButton href="/soil-analysis" tooltip="Soil Analysis" isActive>
-                        <ClipboardPen />
-                        <span className="group-data-[collapsible=icon]:hidden">
-                          Soil Analysis
-                        </span>
-                      </SidebarMenuButton>
+                      <Link href="/soil-analysis">
+                        <SidebarMenuButton tooltip="Soil Analysis" isActive>
+                          <ClipboardPen />
+                          <span className="group-data-[collapsible=icon]:hidden">
+                            Soil Analysis
+                          </span>
+                        </SidebarMenuButton>
+                      </Link>
                     </SidebarMenuItem>
                 </SidebarMenu>
                 </SidebarContent>
