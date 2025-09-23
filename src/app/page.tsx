@@ -1,4 +1,4 @@
-import { Home, Leaf, Sprout } from 'lucide-react';
+import { Home } from 'lucide-react';
 
 import {
   Sidebar,
@@ -32,22 +32,6 @@ export default function DashboardPage() {
                 <Home />
                 <span className="group-data-[collapsible=icon]:hidden">
                   Dashboard
-                </span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton href="#" tooltip="My Crops">
-                <Sprout />
-                <span className="group-data-[collapsible=icon]:hidden">
-                  My Crops
-                </span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton href="#" tooltip="Pest Library">
-                <Leaf />
-                <span className="group-data-[collapsible=icon]:hidden">
-                  Pest Library
                 </span>
               </SidebarMenuButton>
             </SidebarMenuItem>
