@@ -1,4 +1,4 @@
-import { Home } from 'lucide-react';
+import { Home, PanelLeft } from 'lucide-react';
 
 import {
   Sidebar,
@@ -9,6 +9,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarFooter,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
 import Header from '@/components/header';
 import { KrishiMitraAIIcon } from '@/components/icons';
@@ -35,12 +37,18 @@ export default function DashboardPage() {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
+        <SidebarFooter>
+          <SidebarTrigger>
+            <PanelLeft />
+            <span className="group-data-[collapsible=icon]:hidden">
+              Collapse
+            </span>
+          </SidebarTrigger>
+        </SidebarFooter>
       </Sidebar>
       <SidebarInset>
         <Header />
-        <main className="p-4 lg:p-6">
-          {/* Your dashboard content goes here */}
-        </main>
+        <main className="p-4 lg:p-6"></main>
       </SidebarInset>
     </SidebarProvider>
   );
