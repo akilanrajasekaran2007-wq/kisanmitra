@@ -39,6 +39,7 @@ const CropSuggestionSchema = z.object({
     timePeriod: z.string().describe('The approximate time from planting to harvest.'),
     expectedYield: z.string().describe('The typical yield per unit area (e.g., "4-5 tons/hectare").'),
     suitability: z.string().describe('Why this crop is suitable for the given soil conditions.'),
+    approxPrice: z.string().describe('The approximate market price for the crop (e.g., "₹20-25/kg").'),
   })),
 });
 export type CropSuggestion = z.infer<typeof CropSuggestionSchema>;
@@ -154,7 +155,7 @@ const suggestCropsPrompt = ai.definePrompt({
   - {{name}}: {{recommendation}}
   {{/each}}
 
-  For each suggested crop, provide the common time period for its growth cycle (planting to harvest) and the expected yield. Also explain its suitability.
+  For each suggested crop, provide the common time period for its growth cycle (planting to harvest), the expected yield and the approximate market price. Also explain its suitability.
   Return the suggestions in the specified JSON format.
   `,
 });

@@ -195,6 +195,7 @@ export default function SoilReportAnalysis({
                             <TableHead>Crop</TableHead>
                             <TableHead>Time Period</TableHead>
                             <TableHead>Expected Yield</TableHead>
+                            <TableHead>Approx. Price</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -206,6 +207,7 @@ export default function SoilReportAnalysis({
                                 </TableCell>
                                 <TableCell>{crop.timePeriod}</TableCell>
                                 <TableCell>{crop.expectedYield}</TableCell>
+                                <TableCell>{crop.approxPrice}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
