@@ -7,10 +7,40 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Globe, PanelLeft } from 'lucide-react';
+import { Globe, PanelLeft, Laptop, Smartphone } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import { useDeviceView } from '@/context/device-view-provider';
+import { cn } from '@/lib/utils';
+
+function DeviceSwitcher() {
+  const { view, setView } = useDeviceView();
+
+  return (
+    <div className="flex items-center gap-2 rounded-lg bg-muted p-1">
+      <Button
+        variant={view === 'desktop' ? 'secondary' : 'ghost'}
+        size="icon"
+        onClick={() => setView('desktop')}
+        className={cn('h-8 w-8', view === 'desktop' && 'bg-background shadow-sm')}
+      >
+        <Laptop className="h-4 w-4" />
+        <span className="sr-only">Desktop</span>
+      </Button>
+      <Button
+        variant={view === 'mobile' ? 'secondary' : 'ghost'}
+        size="icon"
+        onClick={() => setView('mobile')}
+        className={cn('h-8 w-8', view === 'mobile' && 'bg-background shadow-sm')}
+      >
+        <Smartphone className="h-4 w-4" />
+        <span className="sr-only">Mobile</span>
+      </Button>
+    </div>
+  );
+}
+
 
 export default function Header() {
   const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar');
@@ -21,8 +51,8 @@ export default function Header() {
         <PanelLeft />
       </SidebarTrigger>
       <h1 className="text-xl font-semibold md:hidden">KrishiMitraAI</h1>
-      <div className="flex-1">
-        {/* Can add search bar or breadcrumbs here if needed */}
+      <div className="flex-1 justify-center hidden md:flex">
+        <DeviceSwitcher />
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
