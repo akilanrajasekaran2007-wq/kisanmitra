@@ -69,13 +69,13 @@ const analyzeSoilReportPrompt = ai.definePrompt({
   input: {schema: AnalyzeSoilReportInputSchema},
   output: {schema: SoilAnalysisSchema},
   prompt: `You are a soil analysis expert. Analyze the following soil data report text.
-  Identify all key chemical components available in the soil, their values, and their status (e.g., Low, High, Optimal).
-  Then, identify which components are not available or are at deficient levels and provide a recommendation for what is needed.
+  1. Identify all key chemical components available in the soil, their values, and their status (e.g., Low, High, Optimal). Populate these in the 'presentComponents' array.
+  2. Identify which components are not available or are at deficient levels and provide a recommendation for what is needed. Populate these in the 'neededComponents' array.
 
   Soil Report:
   {{{reportText}}}
 
-  Return the analysis in the specified JSON format. 'presentComponents' should contain all components found in the report. 'neededComponents' should only contain components that are deficient or missing.
+  Return the complete analysis in the specified JSON format, ensuring both 'presentComponents' and 'neededComponents' are populated based on the report.
   `,
 });
 
