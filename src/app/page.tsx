@@ -1,5 +1,5 @@
 'use client';
-import { Home, ClipboardPen } from 'lucide-react';
+import { Home, ClipboardPen, Bug } from 'lucide-react';
 import Link from 'next/link';
 import {
   Sidebar,
@@ -59,6 +59,16 @@ export default function DashboardPage() {
                           <ClipboardPen />
                           <span className="group-data-[collapsible=icon]:hidden">
                             Soil Analysis
+                          </span>
+                        </SidebarMenuButton>
+                      </Link>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <Link href="/identify-pest">
+                        <SidebarMenuButton tooltip="Identify Pest">
+                          <Bug />
+                          <span className="group-data-[collapsible=icon]:hidden">
+                            Identify Pest
                           </span>
                         </SidebarMenuButton>
                       </Link>

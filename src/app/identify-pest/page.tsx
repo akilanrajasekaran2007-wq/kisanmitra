@@ -15,9 +15,9 @@ import Header from '@/components/header';
 import { KrishiMitraAIIcon } from '@/components/icons';
 import { useDeviceView } from '@/context/device-view-provider';
 import { cn } from '@/lib/utils';
-import SoilAnalysisForm from '@/components/soil-analysis-form';
+import IdentifyPestForm from '@/components/identify-pest-form';
 
-export default function SoilAnalysisPage() {
+export default function IdentifyPestPage() {
     const { view } = useDeviceView();
 
   return (
@@ -55,7 +55,7 @@ export default function SoilAnalysisPage() {
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                       <Link href="/soil-analysis">
-                        <SidebarMenuButton tooltip="Soil Analysis" isActive>
+                        <SidebarMenuButton tooltip="Soil Analysis">
                           <ClipboardPen />
                           <span className="group-data-[collapsible=icon]:hidden">
                             Soil Analysis
@@ -65,7 +65,7 @@ export default function SoilAnalysisPage() {
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                       <Link href="/identify-pest">
-                        <SidebarMenuButton tooltip="Identify Pest">
+                        <SidebarMenuButton tooltip="Identify Pest" isActive>
                           <Bug />
                           <span className="group-data-[collapsible=icon]:hidden">
                             Identify Pest
@@ -79,7 +79,7 @@ export default function SoilAnalysisPage() {
             <SidebarInset>
                 <Header />
                 <main className="p-4 lg:p-6">
-                  <SoilAnalysisForm />
+                  <IdentifyPestForm />
                 </main>
             </SidebarInset>
             </SidebarProvider>
