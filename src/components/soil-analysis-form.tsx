@@ -162,14 +162,14 @@ export default function SoilAnalysisForm() {
               <Input
                 id="soil-report"
                 type="file"
-                accept=".txt"
+                accept=".txt,.pdf"
                 onChange={handleSoilReportChange}
                 disabled={!!soilPhotoFile}
                 ref={soilReportInputRef}
                 className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
               />
               <p className="text-xs text-muted-foreground">
-                Upload a TXT file for detailed analysis.
+                Upload a TXT or PDF file for detailed analysis.
               </p>
             </div>
             <div className="flex items-center gap-2">
