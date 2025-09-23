@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { LoaderCircle, Upload } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { analyzeSoilImage, AnalyzeSoilImageOutput } from '@/ai/flows/analyze-soil-image';
 import { useToast } from '@/hooks/use-toast';
@@ -26,6 +26,13 @@ export default function SoilAnalysisForm() {
   const [analysis, setAnalysis] = useState<AnalyzeSoilImageOutput | null>(null);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (analysis && resultsRef.current) {
+      resultsRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [analysis]);
 
   const handleSoilPhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -161,7 +168,9 @@ export default function SoilAnalysisForm() {
           </Button>
         </CardFooter>
       </Card>
-      {analysis && <SoilAnalysisResult analysis={analysis} />}
+      <div ref={resultsRef}>
+        {analysis && <SoilAnalysisResult analysis={analysis} />}
+      </div>
     </div>
   );
 }
