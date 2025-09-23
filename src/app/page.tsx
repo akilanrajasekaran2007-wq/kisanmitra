@@ -11,8 +11,6 @@ import {
   SidebarProvider,
 } from '@/components/ui/sidebar';
 import Header from '@/components/header';
-import ImageAnalysisForm from '@/components/image-analysis-form';
-import WeatherForecast from '@/components/weather-forecast';
 import { KrishiMitraAIIcon } from '@/components/icons';
 
 export default function DashboardPage() {
@@ -41,14 +39,7 @@ export default function DashboardPage() {
       <SidebarInset>
         <Header />
         <main className="p-4 lg:p-6">
-          <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
-            <div className="xl:col-span-2">
-              <ImageAnalysisForm />
-            </div>
-            <div className="xl:col-span-1">
-              <WeatherForecast />
-            </div>
-          </div>
+          {/* Your dashboard content goes here */}
         </main>
       </SidebarInset>
     </SidebarProvider>
