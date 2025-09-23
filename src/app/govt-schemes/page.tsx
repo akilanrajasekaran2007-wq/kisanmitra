@@ -1,5 +1,5 @@
 'use client';
-import { Home, ClipboardPen, Bug, Landmark, LogOut } from 'lucide-react';
+import { Home, ClipboardPen, Bug, Landmark, LogOut, History as HistoryIcon } from 'lucide-react';
 import Link from 'next/link';
 import {
   Sidebar,
@@ -73,6 +73,16 @@ export default function GovtSchemesPage() {
                           </span>
                         </SidebarMenuButton>
                       </Link>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                        <Link href="/history">
+                        <SidebarMenuButton tooltip="History">
+                            <HistoryIcon />
+                            <span className="group-data-[collapsible=icon]:hidden">
+                            History
+                            </span>
+                        </SidebarMenuButton>
+                        </Link>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                       <Link href="/govt-schemes">

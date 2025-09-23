@@ -16,9 +16,9 @@ import Header from '@/components/header';
 import { KrishiMitraAIIcon } from '@/components/icons';
 import { useDeviceView } from '@/context/device-view-provider';
 import { cn } from '@/lib/utils';
-import YourPlantForm from '@/components/your-plant-form';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default function DashboardPage() {
+export default function HistoryPage() {
     const { view } = useDeviceView();
 
   return (
@@ -45,14 +45,14 @@ export default function DashboardPage() {
                 <SidebarContent>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                    <Link href="/">
-                      <SidebarMenuButton tooltip="Dashboard" isActive>
-                          <Home />
-                          <span className="group-data-[collapsible=icon]:hidden">
-                          Dashboard
-                          </span>
-                      </SidebarMenuButton>
-                    </Link>
+                      <Link href="/">
+                        <SidebarMenuButton tooltip="Dashboard">
+                            <Home />
+                            <span className="group-data-[collapsible=icon]:hidden">
+                            Dashboard
+                            </span>
+                        </SidebarMenuButton>
+                      </Link>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                       <Link href="/soil-analysis">
@@ -76,7 +76,7 @@ export default function DashboardPage() {
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                         <Link href="/history">
-                        <SidebarMenuButton tooltip="History">
+                        <SidebarMenuButton tooltip="History" isActive>
                             <HistoryIcon />
                             <span className="group-data-[collapsible=icon]:hidden">
                             History
@@ -110,7 +110,14 @@ export default function DashboardPage() {
             <SidebarInset>
                 <Header />
                 <main className="p-4 lg:p-6">
-                  <YourPlantForm />
+                  <Card>
+                    <CardHeader>
+                        <CardTitle>History</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p>Your activity history will be displayed here.</p>
+                    </CardContent>
+                  </Card>
                 </main>
             </SidebarInset>
             </SidebarProvider>
