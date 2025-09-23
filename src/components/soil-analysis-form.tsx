@@ -18,32 +18,37 @@ import Image from 'next/image';
 import { analyzeSoilImage, AnalyzeSoilImageOutput } from '@/ai/flows/analyze-soil-image';
 import { useToast } from '@/hooks/use-toast';
 import SoilAnalysisResult from './soil-analysis-result';
+import SoilReportAnalysis from './soil-report-analysis';
+import {
+  analyzeSoilReport,
+  SoilAnalysis,
+} from '@/ai/flows/analyze-soil-report-and-recommend';
 
 export default function SoilAnalysisForm() {
   const [soilPhotoFile, setSoilPhotoFile] = useState<File | null>(null);
   const [soilPhotoPreview, setSoilPhotoPreview] = useState<string | null>(null);
   const [location, setLocation] = useState('');
-  const [analysis, setAnalysis] = useState<AnalyzeSoilImageOutput | null>(null);
+  const [imageAnalysis, setImageAnalysis] = useState<AnalyzeSoilImageOutput | null>(null);
+  const [reportAnalysis, setReportAnalysis] = useState<SoilAnalysis | null>(null);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const resultsRef = useRef<HTMLDivElement>(null);
-
-  // Note: PDF analysis is a complex feature that requires a library like pdf-parse.
-  // For this prototype, we'll simulate reading text from a text file.
   const [soilReportFile, setSoilReportFile] = useState<File | null>(null);
 
   useEffect(() => {
-    if (analysis && resultsRef.current) {
+    if ((imageAnalysis || reportAnalysis) && resultsRef.current) {
       resultsRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [analysis]);
+  }, [imageAnalysis, reportAnalysis]);
 
   const handleSoilPhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setSoilPhotoFile(file);
       setSoilPhotoPreview(URL.createObjectURL(file));
-      setAnalysis(null);
+      setImageAnalysis(null);
+      setReportAnalysis(null); // Reset other analysis
+      setSoilReportFile(null); // Reset other file
     } else {
       setSoilPhotoFile(null);
       setSoilPhotoPreview(null);
@@ -54,7 +59,10 @@ export default function SoilAnalysisForm() {
     const file = event.target.files?.[0];
     if (file) {
       setSoilReportFile(file);
-      setAnalysis(null);
+      setReportAnalysis(null);
+      setImageAnalysis(null); // Reset other analysis
+      setSoilPhotoFile(null); // Reset other file
+      setSoilPhotoPreview(null);
     } else {
       setSoilReportFile(null);
     }
@@ -71,20 +79,24 @@ export default function SoilAnalysisForm() {
     }
 
     setLoading(true);
-    setAnalysis(null);
+    setImageAnalysis(null);
+    setReportAnalysis(null);
 
-    // Prioritize report analysis if available
     if (soilReportFile) {
-        // Here you would implement the logic for the new multi-step flow.
-        // For now, we will keep the existing image analysis flow.
-        // A full implementation requires significant state management for the conversation steps.
+      try {
+        const reportText = await soilReportFile.text();
+        const result = await analyzeSoilReport({ reportText });
+        setReportAnalysis(result);
+      } catch (error) {
+        console.error('Error analyzing soil report:', error);
         toast({
-            title: "Coming Soon!",
-            description: "Full soil report analysis is under development."
+          variant: 'destructive',
+          title: 'Analysis Failed',
+          description: 'Something went wrong while analyzing the soil report. Please try again.',
         });
+      } finally {
         setLoading(false);
-        return;
-
+      }
     } else if (soilPhotoFile) {
       try {
         const reader = new FileReader();
@@ -93,7 +105,7 @@ export default function SoilAnalysisForm() {
           try {
               const base64data = reader.result as string;
               const result = await analyzeSoilImage({ photoDataUri: base64data, location });
-              setAnalysis(result);
+              setImageAnalysis(result);
           } catch (error) {
               console.error('Error analyzing soil image:', error);
               toast({
@@ -140,21 +152,33 @@ export default function SoilAnalysisForm() {
             <div className="grid gap-2">
               <Label htmlFor="soil-report">Soil Data Report (accurate)</Label>
               <div className="flex items-center gap-2">
-                <Input id="soil-report" type="file" accept=".pdf,.csv,.txt" onChange={handleSoilReportChange} />
-                <Button size="icon" variant="outline">
+                <Input
+                  id="soil-report"
+                  type="file"
+                  accept=".txt"
+                  onChange={handleSoilReportChange}
+                  disabled={!!soilPhotoFile}
+                />
+                <Button size="icon" variant="outline" disabled={!!soilPhotoFile}>
                   <Upload className="h-4 w-4" />
                   <span className="sr-only">Upload</span>
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground">
-                Upload a PDF, CSV, or TXT file for detailed analysis.
+                Upload a TXT file for detailed analysis.
               </p>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="soil-photo">Soil Photo (approx)</Label>
               <div className="flex items-center gap-2">
-                <Input id="soil-photo" type="file" accept="image/*" onChange={handleSoilPhotoChange} />
-                <Button size="icon" variant="outline">
+                <Input
+                  id="soil-photo"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleSoilPhotoChange}
+                  disabled={!!soilReportFile}
+                />
+                <Button size="icon" variant="outline" disabled={!!soilReportFile}>
                   <Upload className="h-4 w-4" />
                   <span className="sr-only">Upload</span>
                 </Button>
@@ -176,7 +200,7 @@ export default function SoilAnalysisForm() {
               </div>
             )}
             <div className="grid gap-2">
-              <Label htmlFor="location">Location (Optional)</Label>
+              <Label htmlFor="location">Location (Optional for photo analysis)</Label>
               <Input
                 id="location"
                 placeholder="e.g., Coimbatore, Tamil Nadu"
@@ -184,7 +208,7 @@ export default function SoilAnalysisForm() {
                 onChange={(e) => setLocation(e.target.value)}
               />
               <p className="text-xs text-muted-foreground">
-                Providing a location helps the AI give more accurate recommendations.
+                Providing a location helps the AI give more accurate recommendations with photo analysis.
               </p>
             </div>
           </div>
@@ -197,8 +221,8 @@ export default function SoilAnalysisForm() {
         </CardFooter>
       </Card>
       <div ref={resultsRef}>
-        {analysis && <SoilAnalysisResult analysis={analysis} />}
-        {/* The new multi-step UI would be rendered here */}
+        {imageAnalysis && <SoilAnalysisResult analysis={imageAnalysis} />}
+        {reportAnalysis && <SoilReportAnalysis initialAnalysis={reportAnalysis} />}
       </div>
     </div>
   );
