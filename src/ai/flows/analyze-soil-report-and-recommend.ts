@@ -75,7 +75,7 @@ const analyzeSoilReportPrompt = ai.definePrompt({
   Soil Report:
   {{{reportText}}}
 
-  Return the analysis in the specified JSON format, with available components in 'presentComponents' and unavailable/deficient ones in 'neededComponents'.
+  Return the analysis in the specified JSON format. 'presentComponents' should contain all components found in the report. 'neededComponents' should only contain components that are deficient or missing.
   `,
 });
 

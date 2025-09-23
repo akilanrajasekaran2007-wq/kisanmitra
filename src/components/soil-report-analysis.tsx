@@ -27,7 +27,6 @@ import {
 } from './ui/table';
 import { Button } from './ui/button';
 import { LoaderCircle } from 'lucide-react';
-import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Badge } from './ui/badge';
 import { useToast } from '@/hooks/use-toast';
@@ -115,12 +114,13 @@ export default function SoilReportAnalysis({
             <CardHeader>
               <CardTitle>Get Recommendations</CardTitle>
               <CardDescription>
-                Is there a crop already planted in this soil?
+                Do you have a crop already planted in this soil, or would you like suggestions for new crops?
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
-                <div className="grid gap-2">
-                    <Label htmlFor="plant-name">Select Plant</Label>
+                <div className="grid gap-2 p-4 border rounded-md">
+                    <Label htmlFor="plant-name" className="font-semibold">I have a crop planted</Label>
+                    <p className="text-sm text-muted-foreground">Get a fertilizer recommendation for your existing crop.</p>
                     <Select onValueChange={setPlantName}>
                         <SelectTrigger id="plant-name">
                             <SelectValue placeholder="Select a plant" />
@@ -133,8 +133,8 @@ export default function SoilReportAnalysis({
                             ))}
                         </SelectContent>
                     </Select>
-                    <Button onClick={handleGetFertilizer} disabled={loading} className="mt-2">
-                        {loading ? <LoaderCircle className="animate-spin" /> : 'Get Fertilizer Recommendation'}
+                    <Button onClick={handleGetFertilizer} disabled={loading || !plantName} className="mt-2">
+                        {loading && !cropSuggestions ? <LoaderCircle className="animate-spin" /> : 'Get Fertilizer Recommendation'}
                     </Button>
                 </div>
                 <div className="flex items-center gap-2">
@@ -142,9 +142,13 @@ export default function SoilReportAnalysis({
                     <span className="text-xs text-muted-foreground">OR</span>
                     <div className="flex-grow border-t border-muted" />
                 </div>
-                <Button variant="secondary" onClick={handleSuggestCrops} disabled={loading}>
-                    {loading ? <LoaderCircle className="animate-spin" /> : 'Suggest Crops for this Soil'}
-                </Button>
+                <div className="grid gap-2 p-4 border rounded-md">
+                  <Label className="font-semibold">Suggest crops for me</Label>
+                  <p className="text-sm text-muted-foreground">Get a list of suitable crops for your soil.</p>
+                  <Button variant="secondary" onClick={handleSuggestCrops} disabled={loading} className="mt-2">
+                      {loading && !fertilizerRec ? <LoaderCircle className="animate-spin" /> : 'Suggest Crops for this Soil'}
+                  </Button>
+                </div>
             </CardContent>
           </Card>
         );
@@ -159,7 +163,7 @@ export default function SoilReportAnalysis({
               <CardContent className="grid gap-4">
                 <div>
                   <h3 className="font-semibold">Recommended Fertilizer</h3>
-                  <p>{fertilizerRec.fertilizer}</p>
+                  <p className="text-lg font-bold text-primary">{fertilizerRec.fertilizer}</p>
                 </div>
                 <div>
                   <h3 className="font-semibold">Application Rate</h3>
@@ -167,11 +171,11 @@ export default function SoilReportAnalysis({
                 </div>
                 <div>
                   <h3 className="font-semibold">Reasoning</h3>
-                  <p>{fertilizerRec.reasoning}</p>
+                  <p className="text-sm text-muted-foreground">{fertilizerRec.reasoning}</p>
                 </div>
               </CardContent>
               <CardFooter>
-                 <Button variant="outline" onClick={() => setStep(RecommendationStep.Ask)}>Back</Button>
+                 <Button variant="outline" onClick={() => setStep(RecommendationStep.Ask)}>Back to Recommendations</Button>
               </CardFooter>
             </Card>
           )
@@ -182,7 +186,7 @@ export default function SoilReportAnalysis({
           cropSuggestions && (
             <Card>
               <CardHeader>
-                <CardTitle>Suggested Crops</CardTitle>
+                <CardTitle>Suggested Crops for Your Soil</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
@@ -208,7 +212,7 @@ export default function SoilReportAnalysis({
                 </Table>
               </CardContent>
               <CardFooter>
-                 <Button variant="outline" onClick={() => setStep(RecommendationStep.Ask)}>Back</Button>
+                 <Button variant="outline" onClick={() => setStep(RecommendationStep.Ask)}>Back to Recommendations</Button>
               </CardFooter>
             </Card>
           )
@@ -224,10 +228,13 @@ export default function SoilReportAnalysis({
       <Card>
         <CardHeader>
           <CardTitle>Soil Data Report Analysis</CardTitle>
+          <CardDescription>
+            Here is a breakdown of your soil's composition based on the provided report.
+          </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
           <div>
-            <h3 className="font-semibold mb-2">Available Components</h3>
+            <h3 className="font-semibold mb-2 text-lg">Available Components</h3>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -239,7 +246,7 @@ export default function SoilReportAnalysis({
               <TableBody>
                 {initialAnalysis.presentComponents.map((item) => (
                   <TableRow key={item.name}>
-                    <TableCell>{item.name}</TableCell>
+                    <TableCell className="font-medium">{item.name}</TableCell>
                     <TableCell>{item.value}</TableCell>
                     <TableCell>
                       <Badge
@@ -259,25 +266,27 @@ export default function SoilReportAnalysis({
               </TableBody>
             </Table>
           </div>
-          <div>
-            <h3 className="font-semibold mb-2">Unavailable or Deficient Components</h3>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Deficient Nutrient</TableHead>
-                  <TableHead>Recommendation</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {initialAnalysis.neededComponents.map((item) => (
-                  <TableRow key={item.name}>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item.recommendation}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+          {initialAnalysis.neededComponents.length > 0 && (
+            <div>
+                <h3 className="font-semibold mb-2 text-lg">Deficient or Unavailable Components</h3>
+                <Table>
+                <TableHeader>
+                    <TableRow>
+                    <TableHead>Deficient Nutrient</TableHead>
+                    <TableHead>Recommendation</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {initialAnalysis.neededComponents.map((item) => (
+                    <TableRow key={item.name}>
+                        <TableCell className="font-medium">{item.name}</TableCell>
+                        <TableCell>{item.recommendation}</TableCell>
+                    </TableRow>
+                    ))}
+                </TableBody>
+                </Table>
+            </div>
+           )}
         </CardContent>
       </Card>
 
