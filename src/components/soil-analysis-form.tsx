@@ -25,7 +25,7 @@ export default function SoilAnalysisForm() {
       <CardContent>
         <div className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="soil-report">Soil Data Report</Label>
+            <Label htmlFor="soil-report">Soil Data Report (accurate)</Label>
             <div className="flex items-center gap-2">
               <Input id="soil-report" type="file" />
               <Button size="icon" variant="outline">
