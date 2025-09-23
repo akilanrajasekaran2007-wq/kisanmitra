@@ -1,17 +1,15 @@
 'use client';
-import { Home, PanelLeft } from 'lucide-react';
+import { Home, ClipboardPen } from 'lucide-react';
 
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarInset,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-  SidebarTrigger,
 } from '@/components/ui/sidebar';
 import Header from '@/components/header';
 import { KrishiMitraAIIcon } from '@/components/icons';
@@ -52,6 +50,14 @@ export default function DashboardPage() {
                         Dashboard
                         </span>
                     </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton href="/soil-analysis" tooltip="Soil Analysis">
+                        <ClipboardPen />
+                        <span className="group-data-[collapsible=icon]:hidden">
+                          Soil Analysis
+                        </span>
+                      </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
                 </SidebarContent>
