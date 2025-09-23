@@ -78,9 +78,9 @@ export default function WeatherForecast() {
     toast({
       variant: 'destructive',
       title: 'Location Error',
-      description: 'Could not access your location. Defaulting to Delhi, India.',
+      description: 'Could not access your location. Defaulting to Ongur, India.',
     });
-    const defaultLocation = 'Delhi, India';
+    const defaultLocation = 'Ongur, India';
     setLocation(defaultLocation);
     fetchWeatherForLocation(defaultLocation);
   };
@@ -95,7 +95,7 @@ export default function WeatherForecast() {
         title: 'Location Error',
         description: 'Geolocation is not supported by this browser.',
       });
-      const defaultLocation = 'Delhi, India';
+      const defaultLocation = 'Ongur, India';
       setLocation(defaultLocation);
       fetchWeatherForLocation(defaultLocation);
     }
