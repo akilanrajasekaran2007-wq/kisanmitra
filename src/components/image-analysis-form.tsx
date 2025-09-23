@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useState, useRef, useEffect, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import Image from 'next/image';
 import { Bot, UploadCloud } from 'lucide-react';
 import { getAnalysis } from '@/app/actions';
@@ -36,7 +36,7 @@ function SubmitButton() {
 }
 
 export default function ImageAnalysisForm() {
-  const [state, formAction] = useFormState(getAnalysis, initialState);
+  const [state, formAction] = useActionState(getAnalysis, initialState);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
