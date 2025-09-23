@@ -56,7 +56,7 @@ const getDummyAnalysis = (plant: string, variety: string | null): Omit<AnalysisR
         return {
           primaryDiagnosis: 'Possible Fungal Infection',
           explanation: `The plant may be suffering from a common fungal infection, such as powdery mildew or rust, which is prevalent in ${plant}. This is often caused by high humidity and poor air circulation.`,
-          recommendedActions: 'Apply a fungicide suitable for ${plant}. Improve air circulation around the plant. Avoid overhead watering to keep foliage dry.',
+          recommendedActions: `Apply a fungicide suitable for ${plant}. Improve air circulation around the plant. Avoid overhead watering to keep foliage dry.`,
         };
       case 'Pest Infestation':
         return {
@@ -191,6 +191,9 @@ export default function YourPlantForm() {
         <Card>
           <CardHeader>
             <CardTitle>Latest Analysis Result</CardTitle>
+            <CardDescription>
+              Analyzed on {analysisResult.date}
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
