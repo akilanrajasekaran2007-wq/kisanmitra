@@ -1,5 +1,5 @@
 'use client';
-import { Home, ClipboardPen, Bug } from 'lucide-react';
+import { Home, ClipboardPen, Bug, Landmark } from 'lucide-react';
 import Link from 'next/link';
 import {
   Sidebar,
@@ -69,6 +69,16 @@ export default function DashboardPage() {
                           <Bug />
                           <span className="group-data-[collapsible=icon]:hidden">
                             Identify Pest
+                          </span>
+                        </SidebarMenuButton>
+                      </Link>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <Link href="/govt-schemes">
+                        <SidebarMenuButton tooltip="Govt. Schemes">
+                          <Landmark />
+                          <span className="group-data-[collapsible=icon]:hidden">
+                            Govt. Schemes
                           </span>
                         </SidebarMenuButton>
                       </Link>

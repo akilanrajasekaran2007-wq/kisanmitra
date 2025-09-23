@@ -15,9 +15,9 @@ import Header from '@/components/header';
 import { KrishiMitraAIIcon } from '@/components/icons';
 import { useDeviceView } from '@/context/device-view-provider';
 import { cn } from '@/lib/utils';
-import SoilAnalysisForm from '@/components/soil-analysis-form';
+import GovtSchemes from '@/components/govt-schemes';
 
-export default function SoilAnalysisPage() {
+export default function GovtSchemesPage() {
     const { view } = useDeviceView();
 
   return (
@@ -55,7 +55,7 @@ export default function SoilAnalysisPage() {
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                       <Link href="/soil-analysis">
-                        <SidebarMenuButton tooltip="Soil Analysis" isActive>
+                        <SidebarMenuButton tooltip="Soil Analysis">
                           <ClipboardPen />
                           <span className="group-data-[collapsible=icon]:hidden">
                             Soil Analysis
@@ -75,7 +75,7 @@ export default function SoilAnalysisPage() {
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                       <Link href="/govt-schemes">
-                        <SidebarMenuButton tooltip="Govt. Schemes">
+                        <SidebarMenuButton tooltip="Govt. Schemes" isActive>
                           <Landmark />
                           <span className="group-data-[collapsible=icon]:hidden">
                             Govt. Schemes
@@ -89,7 +89,7 @@ export default function SoilAnalysisPage() {
             <SidebarInset>
                 <Header />
                 <main className="p-4 lg:p-6">
-                  <SoilAnalysisForm />
+                  <GovtSchemes />
                 </main>
             </SidebarInset>
             </SidebarProvider>
