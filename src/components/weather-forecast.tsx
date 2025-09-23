@@ -19,20 +19,24 @@ import {
   getWeatherForecast,
   WeatherForecastOutput,
 } from '@/ai/flows/get-weather-forecast';
-import { LoaderCircle, Cloud, Sun, CloudRain, CloudSnow, MapPin } from 'lucide-react';
+import { Cloud, Sun, CloudRain, CloudSnow, MapPin, Wind } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import { Button } from './ui/button';
 import { useToast } from '@/hooks/use-toast';
 
 const WeatherIcon = ({ condition }: { condition: string }) => {
-  if (condition.toLowerCase().includes('rain')) {
+  const lowerCaseCondition = condition.toLowerCase();
+  if (lowerCaseCondition.includes('rain') || lowerCaseCondition.includes('showers')) {
     return <CloudRain className="h-10 w-10 text-blue-500" />;
   }
-  if (condition.toLowerCase().includes('cloud')) {
-    return <Cloud className="h-10 w-10 text-gray-400" />;
+  if (lowerCaseCondition.includes('thunderstorm')) {
+    return <Wind className="h-10 w-10 text-gray-600" />;
   }
-    if (condition.toLowerCase().includes('snow')) {
+  if (lowerCaseCondition.includes('snow')) {
     return <CloudSnow className="h-10 w-10 text-blue-200" />;
+  }
+  if (lowerCaseCondition.includes('cloud')) {
+    return <Cloud className="h-10 w-10 text-gray-400" />;
   }
   return <Sun className="h-10 w-10 text-yellow-500" />;
 };
@@ -65,7 +69,7 @@ export default function WeatherForecast() {
 
   const handleLocationSuccess = (position: GeolocationPosition) => {
     const { latitude, longitude } = position.coords;
-    const loc = `${latitude}, ${longitude}`;
+    const loc = `${latitude},${longitude}`;
     setLocation(loc);
     fetchWeatherForLocation(loc);
   };
@@ -99,6 +103,7 @@ export default function WeatherForecast() {
 
   useEffect(() => {
     requestLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {
@@ -111,10 +116,12 @@ export default function WeatherForecast() {
             <CardContent>
                 <div className="flex space-x-4">
                     {[...Array(3)].map((_, i) => (
-                        <div key={i} className="flex flex-col items-center space-y-2">
-                            <Skeleton className="h-6 w-12" />
-                            <Skeleton className="h-10 w-10 rounded-full" />
-                            <Skeleton className="h-6 w-16" />
+                        <div key={i} className="flex flex-col items-center space-y-2 p-1">
+                             <div className="flex flex-col items-center space-y-2 rounded-lg border bg-background p-4 w-28">
+                                <Skeleton className="h-5 w-12" />
+                                <Skeleton className="h-10 w-10 rounded-full" />
+                                <Skeleton className="h-6 w-16" />
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -150,16 +157,17 @@ export default function WeatherForecast() {
           opts={{
             align: 'start',
           }}
-          className="w-full max-w-sm"
+          className="w-full max-w-sm sm:max-w-xs md:max-w-sm"
         >
           <CarouselContent>
             {forecast.daily.map((day, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              <CarouselItem key={index} className="basis-1/2 sm:basis-1/3 md:basis-1/2 lg:basis-1/3">
                 <div className="p-1">
                   <div className="flex flex-col items-center space-y-2 rounded-lg border bg-background p-4">
                     <p className="text-sm font-semibold">{day.day}</p>
                     <WeatherIcon condition={day.condition} />
                     <p className="text-lg font-bold">{day.temperature}</p>
+                    <p className="text-xs text-muted-foreground text-center">{day.condition}</p>
                   </div>
                 </div>
               </CarouselItem>
