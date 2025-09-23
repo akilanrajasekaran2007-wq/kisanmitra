@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -54,10 +55,30 @@ export default function SoilAnalysisForm() {
       const reader = new FileReader();
       reader.readAsDataURL(soilPhotoFile);
       reader.onloadend = async () => {
-        const base64data = reader.result as string;
-        const result = await analyzeSoilImage({ photoDataUri: base64data });
-        setAnalysis(result);
+        try {
+            const base64data = reader.result as string;
+            const result = await analyzeSoilImage({ photoDataUri: base64data });
+            setAnalysis(result);
+        } catch (error) {
+            console.error('Error analyzing soil image:', error);
+            toast({
+                variant: 'destructive',
+                title: 'Analysis Failed',
+                description: 'Something went wrong while analyzing the soil image. Please try again.',
+            });
+        } finally {
+            setLoading(false);
+        }
       };
+      reader.onerror = () => {
+        console.error('Error reading file');
+        toast({
+          variant: 'destructive',
+          title: 'File Read Error',
+          description: 'Could not read the selected file. Please try again.',
+        });
+        setLoading(false);
+      }
     } catch (error) {
       console.error('Error analyzing soil image:', error);
       toast({
@@ -65,7 +86,6 @@ export default function SoilAnalysisForm() {
         title: 'Analysis Failed',
         description: 'Something went wrong while analyzing the soil image. Please try again.',
       });
-    } finally {
       setLoading(false);
     }
   };
