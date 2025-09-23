@@ -17,6 +17,7 @@ import Header from '@/components/header';
 import { KrishiMitraAIIcon } from '@/components/icons';
 import { useDeviceView } from '@/context/device-view-provider';
 import { cn } from '@/lib/utils';
+import YourPlantForm from '@/components/your-plant-form';
 
 export default function DashboardPage() {
     const { view } = useDeviceView();
@@ -57,7 +58,9 @@ export default function DashboardPage() {
             </Sidebar>
             <SidebarInset>
                 <Header />
-                <main className="p-4 lg:p-6"></main>
+                <main className="p-4 lg:p-6">
+                  <YourPlantForm />
+                </main>
             </SidebarInset>
             </SidebarProvider>
         </div>
