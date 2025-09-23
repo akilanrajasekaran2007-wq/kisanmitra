@@ -16,10 +16,10 @@ const SoilAnalysisSchema = z.object({
     name: z.string().describe('Name of the nutrient/component'),
     value: z.string().describe('Value of the nutrient (e.g., "25 ppm", "6.8")'),
     status: z.string().describe('Status of the nutrient (e.g., "Low", "High", "Optimal")'),
-  })).describe('List of components present in the soil.'),
+  })).describe('List of all components present in the soil, regardless of their level.'),
   neededComponents: z.array(z.object({
     name: z.string().describe('Name of the deficient nutrient'),
-    recommendation: z.string().describe('Recommended action or percentage needed.'),
+    recommendation: z.string().describe('Recommended action and the specific percentage or amount needed (e.g., "Add 15% Nitrogen", "Increase by 10 ppm").'),
   })).describe('List of components that are deficient and need to be added.'),
 });
 export type SoilAnalysis = z.infer<typeof SoilAnalysisSchema>;
@@ -69,8 +69,8 @@ const analyzeSoilReportPrompt = ai.definePrompt({
   input: {schema: AnalyzeSoilReportInputSchema},
   output: {schema: SoilAnalysisSchema},
   prompt: `You are a soil analysis expert. Analyze the following soil data report text.
-  1. Identify all key chemical components available in the soil, their values, and their status (e.g., Low, High, Optimal). Populate these in the 'presentComponents' array.
-  2. Identify which components are not available or are at deficient levels and provide a recommendation for what is needed. Populate these in the 'neededComponents' array.
+  1.  Identify all key chemical components available in the soil, their values, and their status (e.g., Low, High, Optimal). Populate these in the 'presentComponents' array. This should be a comprehensive list of what the report contains.
+  2.  Identify which components are not available or are at deficient levels. For each, provide a specific recommendation, including the percentage or amount that needs to be added (e.g., "Increase Nitrogen by 15%", "Add 5 ppm of Zinc"). Populate these in the 'neededComponents' array.
 
   Soil Report:
   {{{reportText}}}
