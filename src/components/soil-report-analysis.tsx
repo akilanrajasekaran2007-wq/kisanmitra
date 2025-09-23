@@ -227,7 +227,7 @@ export default function SoilReportAnalysis({
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <h3 className="font-semibold mb-2">Soil Composition</h3>
+            <h3 className="font-semibold mb-2">Available Components</h3>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -260,7 +260,7 @@ export default function SoilReportAnalysis({
             </Table>
           </div>
           <div>
-            <h3 className="font-semibold mb-2">Nutrient Recommendations</h3>
+            <h3 className="font-semibold mb-2">Unavailable or Deficient Components</h3>
             <Table>
               <TableHeader>
                 <TableRow>
