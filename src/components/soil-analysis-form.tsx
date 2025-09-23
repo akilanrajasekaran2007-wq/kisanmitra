@@ -34,6 +34,8 @@ export default function SoilAnalysisForm() {
   const { toast } = useToast();
   const resultsRef = useRef<HTMLDivElement>(null);
   const [soilReportFile, setSoilReportFile] = useState<File | null>(null);
+  const soilReportInputRef = useRef<HTMLInputElement>(null);
+  const soilPhotoInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if ((imageAnalysis || reportAnalysis) && resultsRef.current) {
@@ -47,8 +49,11 @@ export default function SoilAnalysisForm() {
       setSoilPhotoFile(file);
       setSoilPhotoPreview(URL.createObjectURL(file));
       setImageAnalysis(null);
-      setReportAnalysis(null); // Reset other analysis
-      setSoilReportFile(null); // Reset other file
+      setReportAnalysis(null);
+      setSoilReportFile(null);
+      if (soilReportInputRef.current) {
+        soilReportInputRef.current.value = '';
+      }
     } else {
       setSoilPhotoFile(null);
       setSoilPhotoPreview(null);
@@ -60,9 +65,12 @@ export default function SoilAnalysisForm() {
     if (file) {
       setSoilReportFile(file);
       setReportAnalysis(null);
-      setImageAnalysis(null); // Reset other analysis
-      setSoilPhotoFile(null); // Reset other file
+      setImageAnalysis(null);
+      setSoilPhotoFile(null);
       setSoilPhotoPreview(null);
+      if (soilPhotoInputRef.current) {
+        soilPhotoInputRef.current.value = '';
+      }
     } else {
       setSoilReportFile(null);
     }
@@ -150,42 +158,58 @@ export default function SoilAnalysisForm() {
         <CardContent>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="soil-report">Soil Data Report (accurate)</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  id="soil-report"
-                  type="file"
-                  accept=".txt"
-                  onChange={handleSoilReportChange}
-                  disabled={!!soilPhotoFile}
-                />
-                <Button size="icon" variant="outline" disabled={!!soilPhotoFile}>
-                  <Upload className="h-4 w-4" />
-                  <span className="sr-only">Upload</span>
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Upload a TXT file for detailed analysis.
-              </p>
+                <Label htmlFor="soil-report-button">Soil Data Report (accurate)</Label>
+                <div className="flex items-center gap-2">
+                    <Input
+                        id="soil-report"
+                        type="file"
+                        accept=".txt"
+                        onChange={handleSoilReportChange}
+                        disabled={!!soilPhotoFile}
+                        ref={soilReportInputRef}
+                        className="hidden"
+                    />
+                    <Button
+                        id="soil-report-button"
+                        variant="outline"
+                        disabled={!!soilPhotoFile}
+                        onClick={() => soilReportInputRef.current?.click()}
+                        className="w-full justify-start gap-2"
+                    >
+                        <Upload className="h-4 w-4" />
+                        <span>{soilReportFile ? soilReportFile.name : 'Upload Data Report'}</span>
+                    </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                    Upload a TXT file for detailed analysis.
+                </p>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="soil-photo">Soil Photo (approx)</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  id="soil-photo"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleSoilPhotoChange}
-                  disabled={!!soilReportFile}
-                />
-                <Button size="icon" variant="outline" disabled={!!soilReportFile}>
-                  <Upload className="h-4 w-4" />
-                  <span className="sr-only">Upload</span>
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Please upload a JPG, PNG, or other image file.
-              </p>
+                <Label htmlFor="soil-photo-button">Soil Photo (approx)</Label>
+                <div className="flex items-center gap-2">
+                    <Input
+                        id="soil-photo"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleSoilPhotoChange}
+                        disabled={!!soilReportFile}
+                        ref={soilPhotoInputRef}
+                        className="hidden"
+                    />
+                    <Button
+                        id="soil-photo-button"
+                        variant="outline"
+                        disabled={!!soilReportFile}
+                        onClick={() => soilPhotoInputRef.current?.click()}
+                        className="w-full justify-start gap-2"
+                    >
+                        <Upload className="h-4 w-4" />
+                        <span>{soilPhotoFile ? soilPhotoFile.name : 'Upload Photo'}</span>
+                    </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                    Please upload a JPG, PNG, or other image file.
+                </p>
             </div>
             {soilPhotoPreview && (
               <div className="grid gap-2">
@@ -206,6 +230,7 @@ export default function SoilAnalysisForm() {
                 placeholder="e.g., Coimbatore, Tamil Nadu"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
+                disabled={!!soilReportFile}
               />
               <p className="text-xs text-muted-foreground">
                 Providing a location helps the AI give more accurate recommendations with photo analysis.
