@@ -233,40 +233,42 @@ export default function SoilReportAnalysis({
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div>
-            <h3 className="font-semibold mb-2 text-lg">Available Components</h3>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Component</TableHead>
-                  <TableHead>Value</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {initialAnalysis.presentComponents.map((item) => (
-                  <TableRow key={item.name}>
-                    <TableCell className="font-medium">{item.name}</TableCell>
-                    <TableCell>{item.value}</TableCell>
-                    <TableCell>
-                      <Badge
-                        variant={
-                          item.status.toLowerCase() === 'low'
-                            ? 'destructive'
-                            : item.status.toLowerCase() === 'high'
-                            ? 'secondary'
-                            : 'default'
-                        }
-                      >
-                        {item.status}
-                      </Badge>
-                    </TableCell>
+          {initialAnalysis.presentComponents && initialAnalysis.presentComponents.length > 0 && (
+            <div>
+              <h3 className="font-semibold mb-2 text-lg">Available Components</h3>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Component</TableHead>
+                    <TableHead>Value</TableHead>
+                    <TableHead>Status</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          {initialAnalysis.neededComponents.length > 0 && (
+                </TableHeader>
+                <TableBody>
+                  {initialAnalysis.presentComponents.map((item) => (
+                    <TableRow key={item.name}>
+                      <TableCell className="font-medium">{item.name}</TableCell>
+                      <TableCell>{item.value}</TableCell>
+                      <TableCell>
+                        <Badge
+                          variant={
+                            item.status.toLowerCase() === 'low'
+                              ? 'destructive'
+                              : item.status.toLowerCase() === 'high'
+                              ? 'secondary'
+                              : 'default'
+                          }
+                        >
+                          {item.status}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+          {initialAnalysis.neededComponents && initialAnalysis.neededComponents.length > 0 && (
             <div>
                 <h3 className="font-semibold mb-2 text-lg">Deficient or Unavailable Components</h3>
                 <Table>
