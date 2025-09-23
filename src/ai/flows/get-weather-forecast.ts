@@ -67,15 +67,6 @@ export async function getWeatherForecast(
   return getWeatherForecastFlow(input);
 }
 
-const prompt = ai.definePrompt({
-  name: 'getWeatherForecastPrompt',
-  input: { schema: WeatherForecastInputSchema },
-  output: { schema: WeatherForecastOutputSchema },
-  tools: [getDailyWeatherForecast],
-  prompt: `Get the 7-day weather forecast for {{{location}}}.`,
-});
-
-
 const getWeatherForecastFlow = ai.defineFlow(
   {
     name: 'getWeatherForecastFlow',
@@ -83,15 +74,6 @@ const getWeatherForecastFlow = ai.defineFlow(
     outputSchema: WeatherForecastOutputSchema,
   },
   async (input) => {
-    const llmResponse = await prompt(input);
-    const toolResponse = llmResponse.toolRequest?.output;
-
-    if (!toolResponse) {
-        // If the model doesn't call the tool, you might want to handle it.
-        // For this example, we'll just call it directly.
-        console.log("Model did not call tool, calling manually.");
-        return getDailyWeatherForecast(input);
-    }
-    return toolResponse;
+    return getDailyWeatherForecast(input);
   }
 );
