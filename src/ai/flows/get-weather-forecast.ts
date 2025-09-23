@@ -50,7 +50,7 @@ const geocodeAndFetchWeatherTool = ai.defineTool(
         console.log(`(Dummy) Reverse geocoding for lat: ${lat}, lon: ${lon}`);
         // In a real app, you'd call a geocoding service here.
         // For this example, we'll just create a plausible-looking location.
-        displayLocation = `Your Location (Lat: ${parseFloat(lat).toFixed(2)}, Lon: ${parseFloat(lon).toFixed(2)})`;
+        displayLocation = 'Your Current Location';
     } else {
         // If it's not coordinates, we assume it's already a readable location like "Delhi, India".
         console.log(`Fetching dummy weather for ${input.location}`);
