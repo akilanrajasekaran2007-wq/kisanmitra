@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Globe } from 'lucide-react';
+import { Globe, PanelLeft } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -17,7 +17,9 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm sm:px-6">
-      <SidebarTrigger className="md:hidden" />
+      <SidebarTrigger>
+        <PanelLeft />
+      </SidebarTrigger>
       <h1 className="text-xl font-semibold md:hidden">KrishiMitraAI</h1>
       <div className="flex-1">
         {/* Can add search bar or breadcrumbs here if needed */}
