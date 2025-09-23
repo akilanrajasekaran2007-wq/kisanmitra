@@ -19,8 +19,10 @@ import {
   getWeatherForecast,
   WeatherForecastOutput,
 } from '@/ai/flows/get-weather-forecast';
-import { LoaderCircle, Cloud, Sun, CloudRain, CloudSnow } from 'lucide-react';
+import { LoaderCircle, Cloud, Sun, CloudRain, CloudSnow, MapPin } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
+import { Button } from './ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 const WeatherIcon = ({ condition }: { condition: string }) => {
   if (condition.toLowerCase().includes('rain')) {
@@ -38,24 +40,65 @@ const WeatherIcon = ({ condition }: { condition: string }) => {
 export default function WeatherForecast() {
   const [forecast, setForecast] = useState<WeatherForecastOutput | null>(null);
   const [loading, setLoading] = useState(true);
+  const [location, setLocation] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  const fetchWeatherForLocation = async (loc: string) => {
+    try {
+      setLoading(true);
+      const result = await getWeatherForecast({
+        location: loc,
+      });
+      setForecast(result);
+    } catch (error) {
+      console.error('Error fetching weather forecast:', error);
+       toast({
+        variant: 'destructive',
+        title: 'Weather Error',
+        description: 'Could not fetch weather data for your location.',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  const handleLocationSuccess = (position: GeolocationPosition) => {
+    const { latitude, longitude } = position.coords;
+    const loc = `${latitude}, ${longitude}`;
+    setLocation(loc);
+    fetchWeatherForLocation(loc);
+  };
+
+  const handleLocationError = () => {
+    toast({
+      variant: 'destructive',
+      title: 'Location Error',
+      description: 'Could not access your location. Defaulting to Delhi, India.',
+    });
+    const defaultLocation = 'Delhi, India';
+    setLocation(defaultLocation);
+    fetchWeatherForLocation(defaultLocation);
+  };
+
+
+  const requestLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(handleLocationSuccess, handleLocationError);
+    } else {
+       toast({
+        variant: 'destructive',
+        title: 'Location Error',
+        description: 'Geolocation is not supported by this browser.',
+      });
+      const defaultLocation = 'Delhi, India';
+      setLocation(defaultLocation);
+      fetchWeatherForLocation(defaultLocation);
+    }
+  };
 
   useEffect(() => {
-    async function fetchWeather() {
-      try {
-        setLoading(true);
-        // Using a dummy location for demonstration.
-        // In a real app, you would get the user's location.
-        const result = await getWeatherForecast({
-          location: 'Delhi, India',
-        });
-        setForecast(result);
-      } catch (error) {
-        console.error('Error fetching weather forecast:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchWeather();
+    requestLocation();
   }, []);
 
   if (loading) {
@@ -81,7 +124,19 @@ export default function WeatherForecast() {
   }
 
   if (!forecast) {
-    return null;
+     return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Weather Forecast</CardTitle>
+          <CardDescription>Enable location to see the forecast.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button onClick={requestLocation}>
+            <MapPin className="mr-2 h-4 w-4" /> Allow Location Access
+          </Button>
+        </CardContent>
+      </Card>
+    );
   }
 
   return (
